@@ -1,7 +1,7 @@
 import { SetStateAction } from "react";
 import appError from "../utils/appError";
 import { Task } from "../types/tasks";
-
+import { API_URL } from "../pages/Home";
 export const fetchTasks = async ({
   setLoading,
   setError,
@@ -14,7 +14,7 @@ export const fetchTasks = async ({
   setError(null);
   setLoading(true);
   try {
-    const response = await fetch("http://localhost:8000/api/tasks/1");
+    const response = await fetch(`${API_URL}/api/tasks/1`);
 
     if (!response.ok) {
       throw new appError(response.statusText, response.status);

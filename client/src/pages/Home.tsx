@@ -7,6 +7,8 @@ import Tasks from "../components/Tasks";
 import { fetchTasks } from "../api/api";
 import appError from "../utils/appError";
 
+export const API_URL = import.meta.env.VITE_API_BASE_URL;
+
 const Home = () => {
   const [tasks, setTasks] = useState<TaskType[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
@@ -20,7 +22,7 @@ const Home = () => {
   const markAsCompleted = async (taskId: number) => {
     try {
       // Make API request to update the task's status
-      const response = await fetch(`http://localhost:8000/api/task/${taskId}`, {
+      const response = await fetch(`${API_URL}/${taskId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -61,7 +63,7 @@ const Home = () => {
   const deleteTask = async (taskId: number) => {
     try {
       // Make API request to delete the task
-      const response = await fetch(`http://localhost:8000/api/task/${taskId}`, {
+      const response = await fetch(`${API_URL}/${taskId}`, {
         method: "DELETE",
       });
 
