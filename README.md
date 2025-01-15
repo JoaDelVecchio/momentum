@@ -15,11 +15,13 @@ A modern, full-stack task management application built with performance, scalabi
 
 - **React**: For building the user interface with reusable components.
 - **Tailwind CSS**: For efficient and modern styling, emphasizing minimalism and clean design.
+- - **Typescript**
 
 ### Backend
 
 - **Node.js**: JavaScript runtime for building the backend.
 - **Express.js**: Fast and lightweight web framework for creating RESTful APIs.
+- **Typescript**
 
 ### Database
 
