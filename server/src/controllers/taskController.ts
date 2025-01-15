@@ -35,8 +35,7 @@ export const updateTask = async (
 ) => {
   try {
     const taskId = Number(req.params.taskId);
-
-    if (!taskId) throw new AppError(`Invalid or missing taskid`, 400);
+    if (!taskId) throw new AppError("Invalid or missing task ID", 400);
 
     const { title, description, status, due_date } = req.body;
 
@@ -44,13 +43,15 @@ export const updateTask = async (
       .from("tasks")
       .update({ title, description, status, due_date })
       .eq("id", taskId)
-      .select("*");
+      .select("*"); // Ensure all columns are returned
 
     if (error) throw new AppError(error.message, 500);
 
-    if (data === null) throw new AppError(`There is not task to update`, 400);
+    if (!data || data.length === 0) {
+      throw new AppError("No task found to update", 404);
+    }
 
-    res.status(200).json(data[0]);
+    res.status(200).json(data[0]); // Return the updated task
   } catch (error) {
     next(error);
   }

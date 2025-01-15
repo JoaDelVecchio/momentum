@@ -56,8 +56,42 @@ const Home = () => {
     }
   };
 
-  const editTask = (taskId: number) => {
-    console.log(`Editing task with ID: ${taskId}`);
+  const editTask = async (task: TaskType) => {
+    try {
+      console.log("TASK", task);
+      const response = await fetch(`${API_URL}/api/task/${task.id}`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(task), // Convert the task object to JSON
+      });
+
+      if (!response.ok) {
+        // If response is not okay, throw a new appError
+        throw new appError(
+          `Failed to update the task. Error: ${response.statusText}`,
+          response.status
+        );
+      }
+
+      const updatedTask = await response.json(); // Assuming the API returns the updated task
+      setTasks((prevTasks) =>
+        prevTasks.map((currentTask) =>
+          currentTask.id === updatedTask.id ? updatedTask : currentTask
+        )
+      );
+
+      console.log("Task updated successfully:", updatedTask);
+    } catch (error) {
+      if (error instanceof appError) {
+        console.error("Error updating the task:", error.message);
+        setError(error.message); // Handle application-level errors
+      } else {
+        console.error("Unexpected error:", error);
+        setError("An unexpected error occurred."); // Handle unexpected errors
+      }
+    }
   };
 
   const deleteTask = async (taskId: number) => {
@@ -88,16 +122,26 @@ const Home = () => {
   };
 
   const today = new Date().toISOString().split("T")[0];
-  const normalizeDate = (dateString: string) => dateString.split("T")[0];
+  const normalizeDate = (dateString: string | null): string | null => {
+    if (!dateString) return null; // Return null if dateString is null
+    return dateString.split("T")[0]; // Extract the `yyyy-MM-dd` part
+  };
 
   const dailyDiscipline = tasks.filter(
     (task) =>
       normalizeDate(task.due_date) === today && task.status === "in-progress"
   );
+
   const dailyWins = tasks.filter((task) => task.status === "completed");
-  const whatsNext = tasks.filter(
-    (task) => normalizeDate(task.due_date) > today && task.status === "pending"
-  );
+
+  tasks.forEach((task) => {
+    console.log("Task ID:", task.id, "Status:", task.status);
+  });
+  const whatsNext = tasks.filter((task) => {
+    if (!task.status || !task.due_date) return false; // Ensure both fields exist
+    const normalizedDueDate = normalizeDate(task.due_date);
+    return normalizedDueDate && normalizedDueDate > today;
+  });
 
   if (error) return <ErrorMessage error={error} />;
   if (loading) return <Loading />;

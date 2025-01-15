@@ -12,7 +12,7 @@ const Tasks = ({
   tasks: TaskType[];
   markAsCompleted: (taskId: number) => void;
   deleteTask: (taskId: number) => void;
-  editTask: (taskId: number) => void;
+  editTask: (task: TaskType) => void;
 }) => {
   return (
     <section>
