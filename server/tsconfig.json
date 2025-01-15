@@ -1,0 +1,10 @@
+{
+  "compilerOptions": {
+    "outDir": "./dist", // Compiled files go into the "dist" folder
+    "rootDir": "./src", // Source files are in the "src" folder
+    "module": "commonjs",
+    "target": "es6",
+    "strict": true,
+    "esModuleInterop": true
+  }
+}
