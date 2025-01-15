@@ -22,7 +22,7 @@ const Home = () => {
   const markAsCompleted = async (taskId: number) => {
     try {
       // Make API request to update the task's status
-      const response = await fetch(`${API_URL}/${taskId}`, {
+      const response = await fetch(`${API_URL}/api/task/${taskId}`, {
         method: "PUT",
         headers: {
           "Content-Type": "application/json",
@@ -63,7 +63,7 @@ const Home = () => {
   const deleteTask = async (taskId: number) => {
     try {
       // Make API request to delete the task
-      const response = await fetch(`${API_URL}/${taskId}`, {
+      const response = await fetch(`${API_URL}/api/task/${taskId}`, {
         method: "DELETE",
       });
 
