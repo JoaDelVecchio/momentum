@@ -2,6 +2,7 @@ import { SetStateAction, useState } from "react";
 import appError from "../utils/appError";
 import { Task } from "../types/tasks";
 import Loading from "./Loading";
+import { API_URL } from "../pages/Home";
 
 type FormData = {
   user_id: number;
@@ -68,7 +69,7 @@ const AddTaskForm = ({
 
     try {
       setLoading(true);
-      const response = await fetch("http://localhost:8000/api/tasks/1", {
+      const response = await fetch(`${API_URL}/api/tasks/1`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
