@@ -132,7 +132,10 @@ const Home = () => {
       normalizeDate(task.due_date) === today && task.status === "in-progress"
   );
 
-  const dailyWins = tasks.filter((task) => task.status === "completed");
+  const dailyWins = tasks.filter(
+    (task) =>
+      task.status === "completed" && normalizeDate(task.due_date) === today
+  );
 
   tasks.forEach((task) => {
     console.log("Task ID:", task.id, "Status:", task.status);
