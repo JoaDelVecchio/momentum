@@ -137,9 +137,7 @@ const Home = () => {
       task.status === "completed" && normalizeDate(task.due_date) === today
   );
 
-  tasks.forEach((task) => {
-    console.log("Task ID:", task.id, "Status:", task.status);
-  });
+  tasks.forEach((task) => {});
   const whatsNext = tasks.filter((task) => {
     if (!task.status || !task.due_date) return false; // Ensure both fields exist
     const normalizedDueDate = normalizeDate(task.due_date);
